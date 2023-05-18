@@ -1,0 +1,307 @@
+declare
+    n number;
+    len number;
+    m number;
+    r number;
+    summ number:=0;
+begin
+    n:=&n;
+    m:=n;
+    len:=length(to_char(n));
+    while(n>0)
+        loop
+            r:=mod(n,10);
+            summ:=summ + POWER(r,len);
+            n:=trunc(n/10);
+        end loop;
+    DBMS_OUTPUT.PUT_LINE(m);   
+    DBMS_OUTPUT.PUT_LINE(summ); 
+    IF (m = summ) THEN
+           DBMS_OUTPUT.PUT_LINE('yes');
+       ELSE
+         DBMS_OUTPUT.PUT_LINE('no');
+    END IF;    
+End;
+/            
+
+declare
+-- declare variable n, s,r, len
+-- and m of datatype number
+    n number:=1634;
+    s number:=0;
+    r number;
+    len number;
+    m number;
+  
+DECLARE
+    -- declare variable n, s, r, len, and m of datatype number
+    n NUMBER := 1634;
+    s NUMBER := 0;
+    r NUMBER;
+    len NUMBER;
+    m NUMBER;
+BEGIN
+    m := n;
+  
+    len := LENGTH(TO_CHAR(n));
+
+    -- while loop till n>0
+    WHILE n > 0 LOOP
+        r := MOD(n, 10);
+        s := s + POWER(r, len);
+        n := TRUNC(n / 10);
+    END LOOP;
+
+    IF m = s THEN
+        DBMS_OUTPUT.PUT_LINE('yes');
+    ELSE
+
+============================================
+assignement 4
+++++++++++++++++++++
+
+create table sailor(sid varchar2(4) primary key check(sid like 's%'), sname varchar2(15) check(sname=initcap(sname)),mname varchar2(15), surname varchar2(15) not null, rating number default 0, age number(3,1) not null);
+
+insert into sailor values('s22','Fredrico','','Roberts',7,45);
+
+
+
+1
+select sname,age from sailor;
+2
+select sname||' '||mname||' '||surname as names_of_sailor,age,age+2 from sailor;
+3
+select * from sailor order by sname asc;
+4
+select sname from sailor;
+5
+select distinct sname from sailor;
+8
+select * from sailor where rating>'7';
+9
+select * from sailor where sname='Horatio' or age=35.4 
+10
+11
+select sname from sailor where sid in (select sid from reserve where bid='104');
+//(select sid from reserve where bid='104');
+select sname from sailor where sailor.sid in (select sid from reserve where bid='104');
+12
+select sid from sailor where sid in(select sid from reserve where bid in(select bid from boat where color='red'));
+select sname from sailor where sid in(select sid from reserve where bid in(select bid from boat where color='red'));
+13
+select sname from sailor where sname like 'B%' or sname like 'b%';
+14
+select sname from sailor where sname like '%B%' or sname like '%b%';
+15
+select sname from sailor where rating is not null;
+16
+select sname from sailor where rating is null;
+17
+select color from boat where bid in (select bid from reserve where sid in(select sid from sailor where sname='Lubber'));
+18
+select sname from sailor where sid in(select sid from reserve where bid in(select bid from boat));
+19
+20-21
+select sname from sailor where sname like 'B%b' and length(sname)>=3;
+select sname from sailor where sname like 'B%B' and length(sname)=3;
+22
+23
+select sname from sailor where sid in(select sid from reserve where bid in(select bid from boat where color='red' or color='green'));
+24
+select sname from sailor where sid in(select sid from reserve where bid in(select bid from boat where color='red')) minus
+select sname from sailor where sid in(select sid from reserve where bid in(select bid from boat where color='green'));
+25
+select sname from sailor where sid in(select sid from reserve where bid in(select bid from boat where bid='103'));
+26
+select sname from sailor where sid in(select sid from reserve where bid in(select bid from boat where color='red'));
+27
+28
+select sname from sailor where sid in(select sid from reserve where bid in(select bid from boat where color='green' or color='blue')) minus
+select sname from sailor where sid in(select sid from reserve where bid in(select bid from boat where color='red'));
+29
+select count(distinct sname) from sailor;
+30
+a
+select * from sailor where rating > any (select rating from sailor where sname='Horatio');
+B
+select distinct sname from sailor where rating < all (select rating from sailor where sname='Horatio');
+31
+a
+B
+32
+select * from sailor where sname!='Lubber' and sname !='Horatio';
+33
+select sname from sailor where rating > any(7,8,9) ;
+34
+select sname from sailor where rating > all(7,8,9);
+35
+select avg(age) from sailor group by rating having  rating=10;
+select avg(age) from sailor where rating=10;
+36
+select sname from sailor where age > (select max(age) from sailor where rating = 10); 
+37
+select min(age),rating from sailor group by rating;
+38
+select sname from sailor where age>=18 group by sname,rating;
+select count(*) from sailor where age>=18 group by rating;
+39
+select min(age),count(*),rating from sailor where age>=18 group by rating having count(*)>=2;
+40
+select avg(age),count(*) from sailor group by rating having count(*)>=2;
+41
+select count(*),bid from reserve where bid in (select bid from boat where color='red') group by bid;
+42
+select sname from sailor where rating in(select max(rating) from sailor);
+43
+44
+select rating from sailor group by rating having avg(age) in (select min(avg(age)) from sailor group by rating);
+45
+select sname from sailor where not exists((select bid from boat) minus (select bid from reserve where reserve.sid=sailor.sid));
+46
+select lpad(sname,(select max(length(sname))from sailor)+3,('*')) from sailor;
+
+select lpad(sname,3,('*')) from sailor;
+47
+select sname,length(sname) from sailor;
+48
+select upper(sname) from sailor;
+49
+select lower(sname) from sailor;
+50
+select initcap(sname)||' '||initcap(mname)||' '||initcap(surname) as name from sailor;
+51
+select substr(sname,4,4) from sailor;
+
+SELECT CONSTRAINT_NAME, CONSTRAINT_TYPE, SEARCH_CONDITION
+FROM ALL_CONSTRAINTS
+WHERE TABLE_NAME = 'CUST100';
+
+52
+select substr(sname,4,1)||''||substr(sname,7,1) from sailor;
+53
+select concat(sid,sname) from sailor;
+54
+select sqrt(rating) from sailor;
+55
+select floor(age) from sailor;
+56
+select ceil(age) from sailor;
+57
+select substr(sname,3) from sailor;
+58
+select months_between(sysdate,day) from reserve;
+59
+select (sysdate-day) from reserve;
+60
+select add_months(day,2) from reserve;
+61
+select add_months(day,-3) from reserve;
+62
+select next_day(day,'monday') from reserve;
+63
+select lpad(rpad(sname,length(sname)+3,'*'),length(sname)+6,'*') from sailor;
+64
+select max(day) from reserve;
+65
+select day from reserve;
+66
+select instr(sname||mname||surname,'Kumar',1,1) from sailor;
+67
+select sname from sailor order by length(sname) asc;
+68
+select sid,sname,(case when mname is not null then 'Available' else 'Not Available' end) from sailor;
+69
+select to_char(day,'ddth month year'),to_char(day,'dd/mm/yyyy') from reserve;
+70
+select day, to_char(day,'day') from reserve;
+71
+select to_char(day,'day'),count(*) from reserve group by to_char(day,'day');
+72
+select to_char(day,'ddd') from reserve;
+73
+select to_char(day,'ww') from reserve;
+
+=================================
+pl
+
+declare
+    str varchar2(20);
+    str1 varchar2(20);
+    len number;
+begin
+    str:='&str';
+    len:=length(str);
+    for i in reverse 1.. len  
+        loop
+            str1:=str1||substr(str,i,1);
+        end loop;
+dbms_output.put_line(str1);
+end;
+/        
+
+pallinn
+
+declare
+    str varchar2(20);
+    str1 varchar2(20);
+    len number;
+begin
+    str:='&str';
+    len:=length(str);
+    for i in reverse 1 ..len
+        loop
+            str1:=str1||substr(str,i,1);
+        end loop;
+    if(str1=str) then 
+            dbms_output.put_line('yes');
+    else   
+        dbms_output.put_line('no');
+    end if;
+end;
+/    
+
+create table sphere(r number(5),a number(5,2),v number(5,2));
+
+declare
+    r sphere.r%type;
+    a sphere.a%type;
+    v sphere.v%type;
+    n number;
+begin
+    n:=&n;
+    for r in 1.. n
+        loop
+            a:=3.14*r*r;
+            v:=(4/3)*3.14*r*r*r;
+            insert into sphere values(r,a,v);
+        end loop;
+end;
+/ 
+
+arm
+
+declare 
+    n number;
+    m number;
+    len number;
+    r number;
+    som number:=0;
+begin   
+    n:=&n;
+    m:=n;
+    len:=length(to_char(n));
+    while(n>0)
+        loop
+          r:=mod(n,10);
+          som:=som+power(r,len);
+          n:=trunc(n/10);
+        end loop;  
+    if(m=som) then 
+        dbms_output.put_line('Arm');
+    else
+        dbms_output.put_line('Not Arm');
+    end if;    
+end;
+/    
+
+
